@@ -18,5 +18,9 @@ To export character to Blender 3.x:
 -   Use Noesis File|Export Preview and set file format to ".gltf (glTF Model)" format ( other formats may not export materials correctly)
 -   In Blender use File|Import and select glTF 2.0 (.glb/.gltf) import option to import .glf model file
 
+Disclaimer:
+This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software. 
+
+
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/export.png)
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/import.png)
