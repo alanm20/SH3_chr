@@ -11,7 +11,7 @@ How to use:
 -  Extract arc file to a output directory using QuickBMS and "SH3 ARC bms script"
 -    (https://wiki.xentax.com/index.php/Silent_Hill_3_ARC)
 -    i.e  quickbms.exe silent_hill_3.bms chrpl.arc  C:\output_dir
-- Run Neosis.exe and navigate to output_dir and click on the characater .dat file
+- Run Noesis.exe and navigate to output_dir and click on the characater .dat file
 - Some .dat are not character model so Noesis will give warnings says they cannot be loaded
 
 To export character to Blender 3.x:
