@@ -4,13 +4,13 @@ Silent Hill 3 character loader for Noesis
 -  Supports bones/skeleton 
 
 Installation:
-- Put fmt_SH3_mesh.py in  Noesis plugin/python/   directory
+- Put fmt_SH3_mesh.py in  Noesis plugins/python/   directory
 
 How to use:
 -  Find Silent Hill 3 PC  character archive files inside game data/ directory. File name "chr*.arc" .i.e.  chrpl.arc, chren.rac chrch.arc , chrit.arc chrwp.arc
 -  Extract arc file to a output directory using QuickBMS and "SH3 ARC bms script"
--    (https://wiki.xentax.com/index.php/Silent_Hill_3_ARC)
--    i.e  quickbms.exe silent_hill_3.bms chrpl.arc  C:\output_dir
+-    ([https://wiki.xentax.com/index.php/Silent_Hill_3_ARC](http://web.archive.org/web/20230817135929/https://wiki.xentax.com/index.php/Silent_Hill_3_ARC))
+-    i.e.  quickbms.exe silent_hill_3.bms chrpl.arc  C:\output_dir
 - Run Noesis.exe and navigate to output_dir and click on the characater .dat file
 - Some .dat are not character model so Noesis will give warnings says they cannot be loaded
 
