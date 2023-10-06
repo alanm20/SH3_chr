@@ -7,7 +7,7 @@ Installation:
 - Put fmt_SH3_mesh.py in  Noesis plugin/python/   directory
 
 How to use:
--  Find Silent Hill 3 PC  character archive files under inside game data/ directory. File name "chr*.arc" .i.e.  chrpl.arc, chren.rac chrch.arc , chrit.arc chrwp.arc
+-  Find Silent Hill 3 PC  character archive files inside game data/ directory. File name "chr*.arc" .i.e.  chrpl.arc, chren.rac chrch.arc , chrit.arc chrwp.arc
 -  Extract arc file to a output directory using QuickBMS and "SH3 ARC bms script"
 -    (https://wiki.xentax.com/index.php/Silent_Hill_3_ARC)
 -    i.e  quickbms.exe silent_hill_3.bms chrpl.arc  C:\output_dir
