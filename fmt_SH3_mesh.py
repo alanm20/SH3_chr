@@ -42,7 +42,7 @@ def registerNoesisTypes():
     noesis.setHandlerTypeCheck(handle, rawTexCheckType)
     noesis.setHandlerLoadRGBA(handle, rawTexLoad)
     
-    noesis.logPopup()
+    #noesis.logPopup()
     return 1
     
 def rawTexCheckType(data):
