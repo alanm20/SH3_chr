@@ -329,8 +329,8 @@ class meshFile(object):
         bs.seek( meshInfo[1], NOESEEK_ABS)
         faceBuff = bs.readBytes(meshInfo[2]*4)         
         
-        # flip mesh along y-axis (vertial direction)
-        rapi.rpgSetTransform(NoeMat43((NoeVec3((1, 0, 0)), NoeVec3((0, -1, 0)), NoeVec3((0, 0, 1)), NoeVec3((0, 0, 0)))))
+        # flip mesh along x and y-axis direction
+        rapi.rpgSetTransform(NoeMat43((NoeVec3((-1, 0, 0)), NoeVec3((0, -1, 0)), NoeVec3((0, 0, 1)), NoeVec3((0, 0, 0)))))
         
 
         normList = []
@@ -349,7 +349,7 @@ class meshFile(object):
                 Bw1,Bw2,Bw3 = struct.unpack('fff',vertBuff[vidx+12:vidx+24])
                 Bi1,Bi2,Bi3,Bi4 = struct.unpack('BBBB',vertBuff[vidx+24:vidx+28])
             
-                Bi4 = 255   #if bone weight is 0.0, set bone id to 255(dummy). prevent weight export problem
+                #if bone weight is 0.0, set bone id to 255(dummy). prevent weight export problem
                 if Bw3 == 0.0:
                     Bi3 = 255
                     if Bw2 == 0.0:
@@ -357,7 +357,6 @@ class meshFile(object):
                 biList.append(Bi1)
                 biList.append(Bi2)
                 biList.append(Bi3)
-                biList.append(Bi4)
 
             vert = NoeVec4((x,y,z,1))
             norm = NoeVec4((nx,ny,nz,0))
@@ -387,8 +386,8 @@ class meshFile(object):
 
         if ucMeshVertStride > 0x20:
             biBuff = struct.pack("<" + 'B'*len(biList), *biList)  
-            rapi.rpgBindBoneIndexBufferOfs(biBuff, noesis.RPGEODATA_UBYTE, 4, 0, 0x4)                    
-            rapi.rpgBindBoneWeightBufferOfs(vertBuff, noesis.RPGEODATA_FLOAT, ucMeshVertStride, iMeshBwPos, 0x4)
+            rapi.rpgBindBoneIndexBufferOfs(biBuff, noesis.RPGEODATA_UBYTE, 3, 0, 0x3)                    
+            rapi.rpgBindBoneWeightBufferOfs(vertBuff, noesis.RPGEODATA_FLOAT, ucMeshVertStride, iMeshBwPos, 0x3)
 
 
         rapi.rpgBindUV1BufferOfs(vertBuff, noesis.RPGEODATA_FLOAT, ucMeshVertStride, iMeshUV1Pos)
@@ -425,7 +424,7 @@ class meshFile(object):
                 bone_mat[0]=[mat[0][0],mat[0][1],mat[0][2] ]
                 bone_mat[1]=[mat[1][0],mat[1][1],mat[1][2] ]
                 bone_mat[2]=[mat[2][0],mat[2][1],mat[2][2] ]
-                bone_mat[3]=[mat[3][0],-mat[3][1],mat[3][2] ]
+                bone_mat[3]=[-mat[3][0],-mat[3][1],mat[3][2] ]
                 
                 self.boneList.append(NoeBone(i, "bone%03i"%i, bone_mat, None, BonePID[i]))
    
