@@ -26,10 +26,11 @@ To export character to Blender 3.x:
 -   Use Noesis File|Export Preview and set file format to ".gltf (glTF Model)" format ( other formats may not export materials correctly)
 -   In Blender use File|Import and select glTF 2.0 (.glb/.gltf) import option to import .glf model file
 
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/export.png)
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/import.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/export.png?raw=true)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/import.png?raw=true)
 
-Character modding instructions: 
+
+Character modding (not so detail) instructions: 
 
 Use Heather starting outfit (chhaa.mdl) as example. New outfit converted from [Sasuke-Bby]'s XPS file (https://www.deviantart.com/sasuke-bby/art/Silent-Hill-3-Heather-Open-Jacket-for-XPS-756352701) 
 
@@ -55,18 +56,18 @@ Overviews:
 18. Start a new game or load the first scene to see whether you get the mod working correctly.
  
 Default Heather (chhaa.mdl)
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/default heather.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/default%20heather.png)
 Duplicate and combine meshes to one weight source mesh
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/weight source.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/weight%20source.png)
 New outfit from OBJ import, diviided into one materail per mesh. Scaled and moved to overlap default heather model 
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/new outfit from OBJ.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/new%20outfit%20from%20OBJ.png)
 Transfer weight operation and settings
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/transfer weight.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/transfer%20weight.png)
 New mesh renamed to replace original mesh. Notice "Mesh_0_?" new mesh block name. Amature and weight source are hidden ( grayed out)
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/ready to export.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/ready%20to%20export.png)
 Noesis Mdl exporting setting. one path for output new mdl, get prompt for the original mdl file that is used for replace.
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/noesis mdl export.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/noesis%20mdl%20export.png)
 New outfit in game
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/in game.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/in%20game.png)
 
 
