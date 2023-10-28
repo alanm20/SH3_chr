@@ -52,7 +52,7 @@ Overviews:
 14. Specific a file name and a new folder location and click on "Export glTF 2.0" button to export.
 15. In Noesis , navigate to and load new exported glTF file. you should see the modified outfit. Choose "Export from Preview" and select a new foler to and file name (chhaa.mdl in this case )for the exported mdl. Set "Main output type" to ".mdl - Silent Hill 3 3D Mesh (PC)". Click on "Export" button. You will see a prompt asking the file locate of the original mdl you are replacing. choose "Browser" and  navigate and select "Silent Hill 3/data/data/pcchar/pl/chhaa.mdl". click ok to export.
 16. Check for errors in the export message box. Typical error is mdl exporter found more than 3 vertex bone weights in the new mesh, which you need to make sure you set Bone weight "Limit Total" to 3 in Blender.
-17. Backup all your Silent Hill 3/data/*.arc files.  Use SH2,3 Explorer v0.8 to import new chhaa.mdl and replace  original one.
+17. Backup all your Silent Hill 3/data/*.arc files.  Use SH2,3 Explorer v0.8 to import new chhaa.mdl and replace the  original chhaa.mdl in chrpl.arc.
 18. Start a new game or load the first scene to see whether you get the mod working correctly.
  
 Default Heather (chhaa.mdl)
@@ -73,7 +73,7 @@ New mesh renamed to replace original mesh. Notice "Mesh_0_?" new mesh block name
 Blender glTF 2.0 export settings
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/Blender%20glTF%20export.png)
-Noesis Mdl exporting setting. one path for output new mdl, get prompt for the original mdl file that is used for replace.
+Noesis Mdl exporting setting, Set the fold and path for new mdl. Top popup prompt asking for the original mdl file for export over.
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/noesis%20mdl%20export.png)
 New outfit in game
