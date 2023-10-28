@@ -75,7 +75,8 @@ New mesh renamed to replace original mesh. Notice "Mesh_0_?" new mesh block name
 Blender glTF 2.0 export settings
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/Blender%20glTF%20export.png)
-Noesis Mdl exporting setting, Set the fold and path for new mdl. Top popup prompt asking for the original mdl file for export over.
+
+Noesis Mdl exporting setting, Set the path for new mdl and output type to SH3. Then a prompt will ask for the original mdl file to export over.
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/noesis%20mdl%20export.png)
 New outfit in game
