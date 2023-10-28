@@ -10,7 +10,7 @@ Acknowledgements:
 
 Rich Whitehouse : Noesis platform, which made all these possible
 
-Gh0stBlade : The original tr8 mesh loader code
+Gh0stBlade : The original Tomb Raider 8 Noesis mesh loader code
 
 AlphaZomega : Inspired by his ROTTR mesh modding method and tool. mdl writer is based on his tr2mesh writer function.  
 
