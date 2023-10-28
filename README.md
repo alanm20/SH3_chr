@@ -1,7 +1,8 @@
 # SH3_chr
-Silent Hill 3 character loader for Noesis
--  Import silent hill 3 character to Noesis for exporting to Blender 3D.
--  Supports bones/skeleton 
+Silent Hill 3 character loader and mdl exporter for Noesis
+-  Import silent hill 3 character to Noesis for exporting to Blender 3D
+-  Supports bones/skeleton
+-  Export modfied glTF 2.0  model back to mdl so it can be loaded in Silent Hill 3 game
 
 Installation:
 - Put fmt_SH3_mesh.py in  Noesis plugins/python/   directory
