@@ -7,6 +7,7 @@ Installation:
 - Put fmt_SH3_mesh.py in  Noesis plugins/python/   directory
 
 Acknowledgements:
+
 Rich Whitehouse : Noesis platform, which made all these possible
 
 Gh0stBlade : The original tr8 mesh loader code
