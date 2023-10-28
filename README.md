@@ -54,6 +54,8 @@ Overviews:
 16. Check for errors in the export message box. Typical error is mdl exporter found more than 3 vertex bone weights in the new mesh, which you need to make sure you set Bone weight "Limit Total" to 3 in Blender.
 17. Backup all your Silent Hill 3/data/*.arc files.  Use SH2,3 Explorer v0.8 to import new chhaa.mdl and replace the  original chhaa.mdl in chrpl.arc.
 18. Start a new game or load the first scene to see whether you get the mod working correctly.
+
+Important notes: Avoid replacing the head or the hair (Mesh_1_?). Head has blendspaces (morphs) which is stored in the mdl file. changing the head will break the morph animation or even crash the game. 
  
 Default Heather (chhaa.mdl)
 
