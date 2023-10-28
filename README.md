@@ -56,18 +56,28 @@ Overviews:
 18. Start a new game or load the first scene to see whether you get the mod working correctly.
  
 Default Heather (chhaa.mdl)
+
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/default%20heather.png)
 Duplicate and combine meshes to one weight source mesh
+
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/weight%20source.png)
-New outfit from OBJ import, diviided into one materail per mesh. Scaled and moved to overlap default heather model 
+New outfit from OBJ import, divided into one material per mesh. Scaled and moved to overlap default heather model 
+
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/new%20outfit%20from%20OBJ.png)
 Transfer weight operation and settings
+
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/transfer%20weight.png)
 New mesh renamed to replace original mesh. Notice "Mesh_0_?" new mesh block name. Amature and weight source are hidden ( grayed out)
+
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/ready%20to%20export.png)
+Blender glTF 2.0 export settings
+
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/Blender%20glTF%20export.png)
 Noesis Mdl exporting setting. one path for output new mdl, get prompt for the original mdl file that is used for replace.
+
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/noesis%20mdl%20export.png)
 New outfit in game
+
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/in%20game.png)
 
 
