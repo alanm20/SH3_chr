@@ -7,8 +7,9 @@ Installation:
 - Put fmt_SH3_mesh.py in  Noesis plugins/python/   directory
 
 How to use:
--  Extract game arc file to get character mdl file.  A copy of SH2,3 Explorer v0.8 can be found in this Russian site([http://heather.ucoz.ru/load/29-1-0-72])
--  In SH2,3 Explorer choose "Add file" menu and open "Silent Hill 3/Data/arc.arc" file. Expand the directory tree in the left panel to find Root->arc.arcdata->chrpl.arc. Left click on chrpl.arc to select it, then right click on chrpl.arc and choose "Extract Selection"
+-  Extract game arc file to get character mdl file.  A copy of SH2,3 Explorer v0.8 can be found in this Russian site: 
+ ([http://heather.ucoz.ru/load/29-1-0-72])
+-  In SH2,3 Explorer choose "Add file" menu and open "Silent Hill 3/Data/arc.arc" file. Expand the directory tree in the left panel to find Root->arc.arc->data->chrpl.arc. Left click on chrpl.arc to select it, then right click on chrpl.arc and choose "Extract Selection"
 -  Extracted files are stored under "Silent Hill 3/data/data" folder 
 - Run Noesis.exe and navigate to "Silent Hill 3/data/data/chr/pl/pcchr/pl/"  and click on "chhaa.mdl" (Heather starting outfit)
 
