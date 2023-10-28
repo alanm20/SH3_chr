@@ -51,7 +51,7 @@ Overviews:
 9. suppose new outfit has 3 meshes. you need to find and replace 3 meshes in Heather model. In Blender outliner panel click on the + icon of a mesh to see the mesh data block (upside down triangle icon) name. It will have name like "Mesh_0_?". suppose Mesh_0_3, Mesh_0_6 , Mesh_0_11 are original outfit mesh. write down these name and you can delete these 3 meshes. next step will replace them with new mesh.
 10. expand the new outfit mesh + icon. and right click on mesh data block and choose rename. Give the 3 new outfit mesh the name Mesh_0_3, Mesh_8_6 and Mesg_0_11.
 11. If you still have old outfit meshes that you don't need. just simply delete that old mesh. You cannot add new mesh. Can only replace or delete existing one.
-12. Hide the "weight source" object and any object that does not belong to the character, make sure armature is also visible. Choose File menu/Export/glIF 2.0 format.
+12. Hide the "weight source" object and any object that does not belong to the character, make sure armature is visible. Choose File menu/Export/glIF 2.0 format.
 13. Set these export option:. Format->"glTF separate(.gltf + .bin + textures)", Include->Limit to: check "Visble Objects", "Geometry"-> Check "Apply Modifiers"
 14. Specific a file name and a new folder location and click on "Export glTF 2.0" button to export.
 15. In Noesis , navigate to and load new exported glTF file. you should see the modified outfit. Choose "Export from Preview" and select a new destiantion folder and file name (chhaa.mdl in this case )for the exported mdl. Set "Main output type" to ".mdl - Silent Hill 3 3D Mesh (PC)". Click on "Export" button. You will see a prompt asking the file locate of the original mdl you are replacing. choose "Browser" and  navigate and select "Silent Hill 3/data/data/pcchar/pl/chhaa.mdl". click ok to export.
@@ -73,7 +73,7 @@ New outfit from OBJ import, divided into one material per mesh. Scaled and moved
 Transfer weight operation and settings
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/transfer%20weight.png)
-New mesh renamed to replace original mesh. Notice "Mesh_0_?" new mesh block name. Amature and weight source are hidden ( grayed out)
+New mesh renamed to replace original mesh. Notice "Mesh_0_?" new mesh block name. Weight source mesh is hidden ( grayed out)
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/ready%20to%20export.png)
 Blender glTF 2.0 export settings
