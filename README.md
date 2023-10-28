@@ -55,7 +55,7 @@ Overviews:
 17. Backup all your Silent Hill 3/data/*.arc files.  Use SH2,3 Explorer v0.8 to import new chhaa.mdl and replace the  original chhaa.mdl in chrpl.arc.
 18. Start a new game or load the first scene to see whether you get the mod working correctly.
 
-Important notes: Avoid replacing the head or the hair (Mesh_1_?). Head has blendspaces (morphs) which is stored in the mdl file. changing the head will break the morph animation or even crash the game. 
+Important notes: Avoid replacing the head or the hair (Mesh_1_?). Head has blendshapes (morphs) which are stored in a section inside the mdl file. Changing the head will break the morph animation or even crash the game. 
  
 Default Heather (chhaa.mdl)
 
