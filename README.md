@@ -12,6 +12,9 @@ Gh0stBlade : The original tr8 mesh loader code
 AlphaZomega : Inspired by his ROTTR mesh modding method and tool. mdl writer is based on his tr2mesh writer function.  
 HenryOfCarim and Sebastian Brachi: Albam Reloaded Blender addon. Use their tri-list to tri-strip conversion code. 
 
+Disclaimer:
+This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software. 
+
 How to use:
 -  Extract game arc file to get character mdl file.  A copy of SH2,3 Explorer v0.8 can be found in this Russian site: 
  ([http://heather.ucoz.ru/load/29-1-0-72])
@@ -23,11 +26,10 @@ To export character to Blender 3.x:
 -   Use Noesis File|Export Preview and set file format to ".gltf (glTF Model)" format ( other formats may not export materials correctly)
 -   In Blender use File|Import and select glTF 2.0 (.glb/.gltf) import option to import .glf model file
 
-Disclaimer:
-This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software. 
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/export.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/import.png)
 
-Character modding instructions:
-Use Heather starter outfit (chhaa.mdl) as example. 
+Character modding instructions: Use Heather starter outfit (chhaa.mdl) as example. 
 Overviews:
 1. load chhaa.mdl to Noesis and export it to glTF format.
 2. Start Blender 3.X and delete all object in the start up scene (no camera, no lights). Import glTF file. Select and make a duplication of all body meshes(exclude armature).
@@ -48,6 +50,3 @@ Overviews:
 17. Backup all your Silent Hill 3/data/*.arc files.  Use SH2,3 Explorer v0.8 to import new chhaa.mdl and replace  original one.
 18. Start a new game or load the first scene to see whether you get the mod working correctly.
  
-
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/export.png)
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/import.png)
