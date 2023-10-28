@@ -29,8 +29,12 @@ To export character to Blender 3.x:
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/export.png)
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/import.png)
 
-Character modding instructions: Use Heather starter outfit (chhaa.mdl) as example. 
+Character modding instructions: 
+
+Use Heather starting outfit (chhaa.mdl) as example. New outfit converted from [Sasuke-Bby]'s XPS file (https://www.deviantart.com/sasuke-bby/art/Silent-Hill-3-Heather-Open-Jacket-for-XPS-756352701) 
+
 Overviews:
+
 1. load chhaa.mdl to Noesis and export it to glTF format.
 2. Start Blender 3.X and delete all object in the start up scene (no camera, no lights). Import glTF file. Select and make a duplication of all body meshes(exclude armature).
 3. Join all duplicated meshes into one mesh and name it "weight source". This is used as bone weight transfer source.
@@ -50,3 +54,19 @@ Overviews:
 17. Backup all your Silent Hill 3/data/*.arc files.  Use SH2,3 Explorer v0.8 to import new chhaa.mdl and replace  original one.
 18. Start a new game or load the first scene to see whether you get the mod working correctly.
  
+Default Heather (chhaa.mdl)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/default heather.png)
+Duplicate and combine meshes to one weight source mesh
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/weight source.png)
+New outfit from OBJ import, diviided into one materail per mesh. Scaled and moved to overlap default heather model 
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/new outfit from OBJ.png)
+Transfer weight operation and settings
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/transfer weight.png)
+New mesh renamed to replace original mesh. Notice "Mesh_0_?" new mesh block name. Amature and weight source are hidden ( grayed out)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/ready to export.png)
+Noesis Mdl exporting setting. one path for output new mdl, get prompt for the original mdl file that is used for replace.
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/noesis mdl export.png)
+New outfit in game
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/in game.png)
+
+
