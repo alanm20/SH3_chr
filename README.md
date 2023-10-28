@@ -7,12 +7,10 @@ Installation:
 - Put fmt_SH3_mesh.py in  Noesis plugins/python/   directory
 
 How to use:
--  Find Silent Hill 3 PC  character archive files inside game data/ directory. File name "chr*.arc" .i.e.  chrpl.arc, chren.rac chrch.arc , chrit.arc chrwp.arc
--  Extract arc file to a output directory using QuickBMS and "SH3 ARC bms script"
--    ([https://wiki.xentax.com/index.php/Silent_Hill_3_ARC](http://web.archive.org/web/20230817135929/https://wiki.xentax.com/index.php/Silent_Hill_3_ARC))
--    i.e.  quickbms.exe silent_hill_3.bms chrpl.arc  C:\output_dir
-- Run Noesis.exe and navigate to output_dir and click on the characater .dat file
-- Some .dat are not character model so Noesis will give warnings says they cannot be loaded
+-  Extract game arc file to get character mdl file.  A copy of SH2,3 Explorer v0.8 can be found in this Russian site([http://heather.ucoz.ru/load/29-1-0-72])
+-  In SH2,3 Explorer choose "Add file" menu and open "Silent Hill 3/Data/arc.arc" file. Expand the directory tree in the left panel to find Root->arc.arcdata->chrpl.arc. Left click on chrpl.arc to select it, then right click on chrpl.arc and choose "Extract Selection"
+-  Extracted files are stored under "Silent Hill 3/data/data" folder 
+- Run Noesis.exe and navigate to "Silent Hill 3/data/data/chr/pl/pcchr/pl/"  and click on "chhaa.mdl" (Heather starting outfit)
 
 To export character to Blender 3.x:
 -   Use Noesis File|Export Preview and set file format to ".gltf (glTF Model)" format ( other formats may not export materials correctly)
