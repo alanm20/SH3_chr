@@ -50,7 +50,7 @@ Overviews:
 7. Click on "Weights" menu again and choose "Limit Total". Set limit to "3" (default is 4). Game only support 3 bones weight per vertex.
 8. Switch back to object mode. repeat step 5,6,7 for each new outfit mesh to give all of them bone weights.  
 9. suppose new outfit has 3 meshes. you need to find and replace 3 meshes in Heather model. In Blender outliner panel click on the + icon of a mesh to see the mesh data block (upside down triangle icon) name. It will have name like "Mesh_0_?". suppose Mesh_0_3, Mesh_0_6 , Mesh_0_11 are original outfit mesh. write down these name and you can delete these 3 meshes. next step will replace them with new mesh.
-10. expand the new outfit mesh + icon. and right click on mesh data block and choose rename. Give the 3 new outfit mesh the name Mesh_0_3, Mesh_8_6 and Mesg_0_11.
+10. expand the new outfit mesh + icon. and right click on mesh data block and choose rename. Give the 3 new outfit mesh the name Mesh_0_3, Mesh_8_6 and Mesh_0_11.
 11. If you still have old outfit meshes that you don't need. just simply delete that old mesh. You cannot add new mesh. Can only replace or delete existing one.
 12. Hide the "weight source" object and any object that does not belong to the character, make sure armature is visible. Choose File menu/Export/glIF 2.0 format.
 13. Set these export option:. Format->"glTF separate(.gltf + .bin + textures)", Include->Limit to: check "Visble Objects", "Mesh"-> Check "Apply Modifiers"
