@@ -53,7 +53,7 @@ def registerNoesisTypes():
     noesis.setHandlerTypeCheck(handle, rawTexCheckType)
     noesis.setHandlerLoadRGBA(handle, rawTexLoad)
     
-    noesis.logPopup()
+    #noesis.logPopup()
     return 1
     
 def rawTexCheckType(data):
@@ -569,7 +569,7 @@ def meshLoadModel(data, mdlList):
     raw_data = rapi.imageEncodeRaw(tex.pixelData,tex.width,tex.height, "b8g8r8a8")   
     return 1
 
-# code from 
+# code from "Albam Reloaded" Blender addon by HenryOfCarim and Sebastian Brachi 
 def triangles_list_to_triangles_strip(mesh):
     """
     Export triangle strips from a blender mesh.
