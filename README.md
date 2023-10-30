@@ -81,6 +81,7 @@ Blender glTF 2.0 export settings
 Noesis Mdl exporting setting, Set the destination file name and output type to mdl - "Silent Hill 3 (PC)". During export a prompt will ask for the original mdl file to export over.
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/noesis%20mdl%20export.png)
+
 New outfit in game
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/in%20game.png)
