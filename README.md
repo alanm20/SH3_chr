@@ -8,16 +8,11 @@ Installation:
 - Put fmt_SH3_mesh.py in  Noesis plugins/python/   directory
 
 Acknowledgements:
-
-Rich Whitehouse : Noesis platform, which made all these possible
-
-Gh0stBlade : The original Tomb Raider 8 Noesis mesh loader code
-
-AlphaZomega : Inspired by his ROTTR mesh modding method and tool. mdl writer is based on his tr2mesh writer function  
-
-Murugo : Misc-Game-Research github artifacts especially information on PS2 Silent Hill 2/3 game file format
-
-HenryOfCarim and Sebastian Brachi: Albam Reloaded Blender addon. Use their tri-list to tri-strip conversion code.  
+-  Rich Whitehouse : Noesis platform, which made all these possible
+-  Gh0stBlade : The original Tomb Raider 8 Noesis mesh loader code
+-  AlphaZomega : Inspired by his ROTTR mesh modding method and tool. mdl writer is based on his tr2mesh writer function  
+-  Murugo : Misc-Game-Research github artifacts especially information on PS2 Silent Hill 2/3 game file format
+-  HenryOfCarim and Sebastian Brachi: Albam Reloaded Blender addon. Use their tri-list to tri-strip conversion code.  
 
 Disclaimer:
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software. 
