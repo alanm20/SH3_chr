@@ -1,7 +1,10 @@
 #
 # Silent Hill 3 PC Model loader
 # alanm1
-# v0.1
+#
+# v0.2 add code to prevent modification to mesh with morph. no support for modifying morph target
+# v0.1 initial release
+
 #
 #Based on:
 #Tomb Raider: Underworld/Lara Croft and The Guardian Of Light [PC/X360] - ".tr8mesh" Loader
@@ -16,6 +19,10 @@
 #Var                            Effect
 #Misc
 #Mesh Global
+bLoadMorph  =  0                # 1 = load morph target
+bMorph_catalog = 0              # 1 = display morphs as side-by-side meshes. 0 = morphs as frame
+Morph_spacing = 100
+
 fDefaultMeshScale = 1.0         #Override mesh scale (default is 1.0)
 bOptimizeMesh = 0               #Enable optimization (remove duplicate vertices, optimize lists for drawing) (1 = on, 0 = off)
 bMaterialsEnabled = 1           #Materials (1 = on, 0 = off)
@@ -43,17 +50,12 @@ def registerNoesisTypes():
     noesis.setHandlerTypeCheck(handle, meshCheckType)
     noesis.setHandlerLoadModel(handle, meshLoadModel)
     noesis.setHandlerWriteModel(handle, meshWriteModel)
-    
 
-    handle = noesis.register("Silent Hill 3: 3D Mesh [PC]", ".tps")
-    noesis.setHandlerTypeCheck(handle, meshCheckType)
-    noesis.setHandlerLoadModel(handle, meshLoadModel)
-    
     handle = noesis.register("Silent Hill 3: 2D Texture [PC]", ".dat")
     noesis.setHandlerTypeCheck(handle, rawTexCheckType)
     noesis.setHandlerLoadRGBA(handle, rawTexLoad)
     
-    noesis.logPopup()
+    #noesis.logPopup()
     return 1
     
 def rawTexCheckType(data):
@@ -62,7 +64,7 @@ def rawTexCheckType(data):
     if magic == 0xFFFFFFFF:
         return 1
     else: 
-        print("Fatal Error: Unknown file magic: " + str(hex(magic) + " expected PCD9!"))
+        print("Fatal Error: Unknown file magic: " + str(hex(magic) + " expected 0xFFFFFFFF!"))
         return 0
 def rawTexLoad(data, texList):
     bs = NoeBitStream(data)
@@ -193,6 +195,7 @@ class meshFile(object):
         self.boneMat2 = []
         self.matTable = []
         self.matHash = {}
+        self.morph_targets = []
         
     def setMaterial(self, matId):
         texId = self.matTable[matId][0]
@@ -262,14 +265,51 @@ class meshFile(object):
             self.bonePair.append([bs.readByte(),bs.readByte()])
         print ("bonepair table",self.bonePair)
         
-        # morph shapes:
+        # build morph targets
+        # Code based on Murugo's Misc-Game-Research github artifacts ,PS2 SH2/3 import_mod.py
         bs.seek(self.offsetMeshStart + self.morph_base_offs,NOESEEK_ABS)
+        base_pos_int16 = []
+        base_norm_int16 = []
+        for i in range(self.morph_base_cnt):        
+             base_pos_int16.append([bs.readShort(),bs.readShort(),bs.readShort()])             
+             base_norm_int16.append([bs.readShort(),bs.readShort(),bs.readShort()])   
 
-        rapi.rpgSetName("Mesh_Base")
-        rapi.rpgSetPosScaleBias((fDefaultMeshScale, fDefaultMeshScale, fDefaultMeshScale), (0, 0, 0))
-        # flip mesh along y-axis (vertial direction)
-        rapi.rpgSetTransform(NoeMat43((NoeVec3((1, 0, 0)), NoeVec3((0, -1, 0)), NoeVec3((0, 0, 1)), NoeVec3((0, 0, 0)))))
+        bs.seek(self.offsetMeshStart + self.morph_data_offs,NOESEEK_ABS)
+        morph_target_desc=[(bs.readUInt(),bs.readUInt()) for _ in range(self.morph_data_cnt)]        
+        normList= []      
+        for vcnt, offs in morph_target_desc:  
+            print ("vcnt",vcnt,hex(offs))
+            bs.seek(self.offsetMeshStart + offs,NOESEEK_ABS)
+            pos_int16 = copy.deepcopy(base_pos_int16)
+            norm_int16 = copy.deepcopy(base_norm_int16)
 
+            for i in range(vcnt):
+                a,b,c = (bs.readShort(),bs.readShort(),bs.readShort())
+                d,e,f = (bs.readShort(),bs.readShort(),bs.readShort())
+                delta_xyz = [a,b,c]
+                delta_norm= [d,e,f]
+                vidx = bs.readUShort()
+                pos_int16[vidx][0]= base_pos_int16[vidx][0]+ delta_xyz[0]
+                pos_int16[vidx][1]= base_pos_int16[vidx][1]+ delta_xyz[1]
+                pos_int16[vidx][2]= base_pos_int16[vidx][2]+ delta_xyz[2]
+                norm_int16[vidx][0]=base_norm_int16[vidx][0]+ delta_norm[0]
+                norm_int16[vidx][1]=base_norm_int16[vidx][1]+ delta_norm[1]
+                norm_int16[vidx][2]=base_norm_int16[vidx][2]+ delta_norm[2]  
+ 
+            self.morph_targets.append((pos_int16,norm_int16))
+        #for pos,_ in self.morph_targets:
+        #    print("pos",pos[0x16])   
+        '''    
+        for norm in pos_int16:
+            normList.append(norm[0]/4096)
+            normList.append(norm[1]/4096)
+            normList.append(norm[2]/4096)
+                    
+        morphPosAr = struct.pack("<" + 'f'*len(normList), *normList)
+        rapi.rpgBindPositionBufferOfs(morphPosAr, noesis.RPGEODATA_FLOAT, 0xc, 0x0)
+        rapi.rpgCommitTriangles(None, noesis.RPGEODATA_USHORT, self.morph_base_cnt, noesis.RPGEO_POINTS, 1)
+        rapi.rpgClearBufferBinds()                                               
+        ''' 
         # main meshes           
         self.loadMeshes(bs,0,self.numMeshes,self.offsetMeshes)
         #
@@ -283,7 +323,10 @@ class meshFile(object):
             mesh_size = bs.readUInt()
             unk =  bs.readUInt()
             header_size = bs.readUInt()
-            bs.seek(4*4, NOESEEK_REL)
+            unk = bs.readUInt()
+            unk = bs.readUInt()
+            morph_ref_cnt = bs.readUInt()
+            morph_ref_offs = bs.readUInt()
             num_bones = bs.readUInt()
             bonemap_offset = bs.readUInt()
             
@@ -332,14 +375,14 @@ class meshFile(object):
                         
             if debug:
                 print("Mesh Info Start: " + str(bs.tell()))
-                print ("Bonemap ",i,self.boneMap)
-            meshFile.buildMesh(self, [num_vertex, cur_pos + fidx_offset, numFidx, meshGroup], i, self.boneMap, self.offsetBones, self.offsetFaceIdx, self.numBones)
+                print("Bonemap ",i,self.boneMap)
+            if i != 7:    
+                meshFile.buildMesh(self, [num_vertex, cur_pos + fidx_offset, numFidx, meshGroup, morph_ref_cnt, cur_pos + morph_ref_offs], i, self.boneMap, self.offsetBones, self.offsetFaceIdx, self.numBones)
             if debug:
                 print("Mesh Info End: " + str(bs.tell()))
             cur_pos = cur_pos + mesh_size
             
     def buildMesh(self, meshInfo, meshIndex, boneMap, uiOffsetBoneMap, uiOffsetFaceData, usNumBones):        
-        
         bs = self.inFile        
         
         rapi.rpgSetName("Mesh_"+ str(meshInfo[3]) + "_" + str(meshIndex))
@@ -384,16 +427,9 @@ class meshFile(object):
                 nx,ny,nz = struct.unpack('fff', vertBuff[vidx+28:vidx+40])            
                 Bw1,Bw2,Bw3 = struct.unpack('fff',vertBuff[vidx+12:vidx+24])
                 Bi1,Bi2,Bi3,Bi4 = struct.unpack('BBBB',vertBuff[vidx+24:vidx+28])
-
-                bidlist = []
-                if Bw1 > 0: bidlist.append(self.boneMap[Bi1])
-                if Bw2 > 0: bidlist.append(self.boneMap[Bi2])
-                if Bw3 > 0: bidlist.append(self.boneMap[Bi3])
-                if meshIndex==8 and 0 in bidlist:
-                    print ("missing bi",bidlist,"bw",Bw1,Bw2,Bw3)
-
             
-                Bi4 = 255   #if bone weight is 0.0, set bone id to 255(dummy). prevent weight export problem
+                Bi4 = 255   
+                #if bone weight is 0.0, set bone id to 255(dummy). prevent weight export problem
                 if Bw3 == 0.0:
                     Bi3 = 255
                     if Bw2 == 0.0:
@@ -422,8 +458,8 @@ class meshFile(object):
             normList.append(newn[0])
             normList.append(newn[1])
             normList.append(newn[2])
-
-        vertB = struct.pack("<" + 'f'*len(vertList), *vertList)
+            
+        vertB = struct.pack("<" + 'f'*len(vertList), *vertList)        
         rapi.rpgBindPositionBufferOfs(vertB, noesis.RPGEODATA_FLOAT, 0xc, 0x0)
 
         normBuff = struct.pack("<" + 'f'*len(normList), *normList)        
@@ -434,15 +470,81 @@ class meshFile(object):
             rapi.rpgBindBoneIndexBufferOfs(biBuff, noesis.RPGEODATA_UBYTE, 3, 0, 0x3)                    
             rapi.rpgBindBoneWeightBufferOfs(vertBuff, noesis.RPGEODATA_FLOAT, ucMeshVertStride, iMeshBwPos, 0x3)
 
-
         rapi.rpgBindUV1BufferOfs(vertBuff, noesis.RPGEODATA_FLOAT, ucMeshVertStride, iMeshUV1Pos)
-            
-        rapi.rpgCommitTriangles(faceBuff, noesis.RPGEODATA_UINT, meshInfo[2], noesis.RPGEO_TRIANGLE_STRIP, 0x1)
+                
+        if bLoadMorph and meshInfo[4] > 0: # number of morph refs
+            if bMorph_catalog: # morph render as separated mesh
+                rapi.rpgCommitTriangles(faceBuff, noesis.RPGEODATA_UINT, meshInfo[2], noesis.RPGEO_TRIANGLE_STRIP, 0x1)
+        
+            # fetch morph shapes and combine it with mesh shape to form morph frames
+            bs.seek(meshInfo[5], NOESEEK_ABS)
+            morph_refs = []
+            for _ in range(meshInfo[4]):
+                morph_refs.append((bs.readUShort(),bs.readUShort(),bs.readUShort()))
+
+            morph_shift_x = -((len(self.morph_targets)+1)//2) * Morph_spacing
+            # 
+            # morph format based on Murugo's Misc-Game-Research github PS2 Silent Hill 3 file format
+            #
+            for pos_list, norm_list in self.morph_targets:   
+                morphPos = copy.deepcopy(vertList)
+                morphNrm = copy.deepcopy(normList)
+                #print ("pos list", len(pos_list))
+                for src_idx, dest_addr, cnt in morph_refs: 
+                   # print ("src_idx",src_idx, dest_addr, cnt)
+                    for c in range(cnt):
+                        # morph vertex pos/normal also need to be transformed
+                        vidx = (dest_addr + c )*ucMeshVertStride
+                        Bi1,Bi2,Bi3,Bi4 = struct.unpack('BBBB',vertBuff[vidx+24:vidx+28])
+                        if ucMeshVertStride == 0x20:  # no skeleton             
+                            mat = self.boneMat[0]
+                        else:
+                            mat = self.boneMat[boneMap[Bi1]] 
+                        pos = [v/0x10 for v in pos_list[src_idx + c]] # convert to float
+                        pos = mat * NoeVec4([pos[0],pos[1],pos[2],1.0])
+                        norm =[n/0x1000 for n in norm_list[src_idx + c]] # convert to float
+                        norm = mat * NoeVec4([norm[0],norm[1],norm[2], 0.0])
+                        morphPos[(dest_addr + c)*3] = pos[0]
+                        morphPos[(dest_addr + c)*3+1] = pos[1]
+                        morphPos[(dest_addr + c)*3+2] = pos[2]
+                        morphNrm[(dest_addr + c)*3] = norm[0]
+                        morphNrm[(dest_addr + c)*3+1] = norm[1]
+                        morphNrm[(dest_addr + c)*3+2] = norm[2]
+                        #print ("pos/norm",pos,norm)
+                if bMorph_catalog:
+                    shiftPos = []
+                    for i, v  in enumerate(morphPos):
+                        if i % 3 == 0:
+                          shiftPos.append(v + morph_shift_x)
+                        else:
+                          shiftPos.append(v)
+                    morphPosAr = struct.pack("<" + 'f'*len(shiftPos), *shiftPos)      
+                else:
+                    morphPosAr = struct.pack("<" + 'f'*len(morphPos), *morphPos)
+                morphNrmAr = struct.pack("<" + 'f'*len(morphNrm), *morphNrm) 
+                if  bMorph_catalog:    
+                    rapi.rpgBindPositionBufferOfs(morphPosAr, noesis.RPGEODATA_FLOAT, 0xc, 0x0)
+                    rapi.rpgBindNormalBufferOfs(morphNrmAr, noesis.RPGEODATA_FLOAT, 0xC, 0x0)
+                    rapi.rpgBindUV1BufferOfs(vertBuff, noesis.RPGEODATA_FLOAT, ucMeshVertStride, iMeshUV1Pos)
+
+                    rapi.rpgCommitTriangles(faceBuff, noesis.RPGEODATA_UINT, meshInfo[2], noesis.RPGEO_TRIANGLE_STRIP, 0x1)
+                    #rapi.rpgClearBufferBinds()   
+                    morph_shift_x = morph_shift_x + Morph_spacing
+                    if morph_shift_x == 0: 
+                        morph_shift_x = morph_shift_x + Morph_spacing
+                else:                
+                    rapi.rpgFeedMorphTargetPositions(morphPosAr, noesis.RPGEODATA_FLOAT, 12)
+                    rapi.rpgFeedMorphTargetNormals(morphNrmAr, noesis.RPGEODATA_FLOAT, 12)
+                    rapi.rpgCommitMorphFrame(meshInfo[0]) # number of mesh vertices
+            if not bMorph_catalog:
+                rapi.rpgCommitMorphFrameSet()
+                rapi.rpgCommitTriangles(faceBuff, noesis.RPGEODATA_UINT, meshInfo[2], noesis.RPGEO_TRIANGLE_STRIP, 0x1)
+        else:
+            rapi.rpgCommitTriangles(faceBuff, noesis.RPGEODATA_UINT, meshInfo[2], noesis.RPGEO_TRIANGLE_STRIP, 0x1)
+              
         if bOptimizeMesh:
             rapi.rpgOptimize()
-        rapi.rpgClearBufferBinds()
-                          
-                      
+        rapi.rpgClearBufferBinds()                                               
 
     def getTailPos(self, PID, bonePID,bonePos):
         hasChild = False
@@ -534,17 +636,7 @@ class meshFile(object):
                 bone_mat[2]=[mat[2][0],mat[2][1],mat[2][2] ]
                 bone_mat[3]=[mat[3][0],mat[3][1],mat[3][2] ]
                 new_mat = mat * self.boneMat[BonePair[i][1]]
-                '''
-                helper_mat = new_mat.toMat43() #
-                if i == 43:
-                    print("bone_43")
-                    print(new_mat)
-                    print(self.boneMat[BonePair[i][0]])                    
-                    print(bone_mat)
-                    print(self.boneMat[BonePair[i][1]])                    
-                #helper_mat = bone_mat * bone_mm[BonePair[i][1]] #bone_mat #new_mat.toMat43()
-                self.boneList.append(NoeBone(i+self.numBones, "b%d_%03i_%03i" % (i,BonePair[i][0] , BonePair[i][1]), helper_mat, None))   
-                '''
+
 def meshLoadModel(data, mdlList):
     ctx = rapi.rpgCreateContext()
     mesh = meshFile(data)
@@ -569,7 +661,7 @@ def meshLoadModel(data, mdlList):
     raw_data = rapi.imageEncodeRaw(tex.pixelData,tex.width,tex.height, "b8g8r8a8")   
     return 1
 
-# code from 
+# code from Ablam Reloaded Blender addon (HenryOfCarim and Sebastian Brachi) 
 def triangles_list_to_triangles_strip(mesh):
     """
     Export triangle strips from a blender mesh.
@@ -867,7 +959,7 @@ def meshWriteModel(mdl, bs):
             # copy mesh header up to start of bonemap
             mesh_header  = f.readBytes(0xa0)
             # parse original mesh header
-            mesh_size,unk,header_size,unk_1,n_fidx,num_unk,unk_off,n_bone, b_off, \
+            mesh_size,unk,header_size,unk_1,n_fidx,n_mph,mph_off,n_bone, b_off, \
                 n_bone2, b_off2, unk_3, unk_4, n_mtrl, mtrl_off, he_off, v_off, n_vert, \
                 f_off, n_fidx2 = struct.unpack_from("IIIIIIIIIIIIIIIIIIII",mesh_header)                                                       
 
@@ -875,9 +967,14 @@ def meshWriteModel(mdl, bs):
             ms.writeBytes(f.readBytes(b_off-0xa0)) # copy header till bonemap start
             
             print (mesh.name)
-            if mesh.name is not "None": 
+            
+            if n_mph > 0:  # this mesh has morphs, we cannot replace it. not support yet
+                ms.writeBytes(f.readBytes(mesh_size-b_off))
+                numVerts = n_vert
+                num_fidx = n_fidx2
+                fidx_start = f_off
+            elif mesh.name is not "None":   # generate new mesh
                 numVerts = len(mesh.positions)
-
                 vertexBoneInfo=[]
                 boneSet = set()
                 bonePairSet = set()    
@@ -893,8 +990,7 @@ def meshWriteModel(mdl, bs):
                     blist = []
                     # sort vertex weight and extract bone id ( allows 1 to 3 weight) 
                     for idx in range(len(mesh.weights[v].indices)):
-                        #if m == 8 and mesh.weights[v].indices[idx] == 72 and mesh.weights[v].weights[idx] > 0:
-                        #    bprint = True
+
                         if mesh.weights[v].weights[idx] >0.05:
                             weightList.append(  (mesh.weights[v].weights[idx],bidxToSkel[mesh.weights[v].indices[idx]]) )
                             blist.append(bidxToSkel[mesh.weights[v].indices[idx]])
@@ -1050,7 +1146,7 @@ def meshWriteModel(mdl, bs):
                     ms.writeFloat(mesh.uvs[v][0] % 1.0)
                     ms.writeFloat(mesh.uvs[v][1] % 1.0) 
                     
-                fidx_start = ms.tell()
+                fidx_start = ms.tell()-header_start
                 # write faces     
                 triStrip = triangles_list_to_triangles_strip(mesh)
                 num_fidx = len(triStrip)
@@ -1058,7 +1154,7 @@ def meshWriteModel(mdl, bs):
                     ms.writeUInt(idx)  
                 print ("triList triStrip len",len(mesh.indices),num_fidx)
                 
-            else:
+            else:  # put out a empty mesh which is invisible
                 # copy rest of header
                 header_cur_pos = ms.tell()
                 ms.writeBytes(f.readBytes(header_size - (header_cur_pos-header_start)))
@@ -1085,7 +1181,7 @@ def meshWriteModel(mdl, bs):
                     # UV
                     ms.writeFloat(0)
                     ms.writeFloat(0)
-                fidx_start = ms.tell()
+                fidx_start = ms.tell()-header_start
                 # face idx  
                 num_fidx = 4
                 ms.writeUInt(0)
@@ -1102,7 +1198,7 @@ def meshWriteModel(mdl, bs):
             ms.seek(header_start)            
             new_mesh_size = mesh_end - header_start 
             ms.writeUInt(new_mesh_size)
-            if mesh.name is not "None":
+            if n_mph == 0 and mesh.name is not "None":
                 ms.seek(header_start + 8,NOESEEK_ABS)           
                 ms.writeUInt(vertex_start - header_start) # header size
                 ms.seek(header_start + 4 * 7, NOESEEK_ABS)
@@ -1119,7 +1215,7 @@ def meshWriteModel(mdl, bs):
             ms.writeUInt(num_fidx)
             ms.seek(header_start + 4 * 17, NOESEEK_ABS)
             ms.writeUInt(numVerts)
-            ms.writeUInt(fidx_start-header_start)   
+            ms.writeUInt(fidx_start)   
             ms.writeUInt(num_fidx)
 
             # move to next mesh header
