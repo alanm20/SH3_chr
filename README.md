@@ -8,14 +8,11 @@ Installation:
 - Put fmt_SH3_mesh.py in  Noesis plugins/python/   directory
 
 Acknowledgements:
-
-Rich Whitehouse : Noesis platform, which made all these possible
-
-Gh0stBlade : The original Tomb Raider 8 Noesis mesh loader code
-
-AlphaZomega : Inspired by his ROTTR mesh modding method and tool. mdl writer is based on his tr2mesh writer function.  
-
-HenryOfCarim and Sebastian Brachi: Albam Reloaded Blender addon. Use their tri-list to tri-strip conversion code. 
+-  Rich Whitehouse : Noesis platform, which made all these possible
+-  Gh0stBlade : The original Tomb Raider 8 Noesis mesh loader code
+-  AlphaZomega : Inspired by his ROTTR mesh modding method and tool. mdl writer is based on his tr2mesh writer function  
+-  Murugo : Misc-Game-Research github artifacts especially information on PS2 Silent Hill 2/3 game file format
+-  HenryOfCarim and Sebastian Brachi: Albam Reloaded Blender addon. Use their tri-list to tri-strip conversion code.  
 
 Disclaimer:
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software. 
@@ -84,6 +81,7 @@ Blender glTF 2.0 export settings
 Noesis Mdl exporting setting, Set the destination file name and output type to mdl - "Silent Hill 3 (PC)". During export a prompt will ask for the original mdl file to export over.
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/noesis%20mdl%20export.png)
+
 New outfit in game
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/in%20game.png)
