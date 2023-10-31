@@ -92,7 +92,7 @@ Special Options:
 
 Change the following flags in the loader source code to enable morph target loading. Set bMorph_calalog to 1 will shows Heather's all 25 morph shapes   
 
-- bLoadMorph  =  0                # 1 = load morph target
-- bMorph_catalog = 0              # 1 = display morphs as side-by-side meshes. 0 = morphs as frame
+- bLoadMorph     = 0                ----->  1 = load morph target
+- bMorph_catalog = 0              -----> 1 = display morphs as side-by-side meshes. 0 = morphs as frame
 
-![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/morph_catalog.png)
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/morph_gallery.png)
