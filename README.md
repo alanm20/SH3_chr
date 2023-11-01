@@ -57,7 +57,8 @@ Overviews:
 17. Backup all your Silent Hill 3/data/*.arc files.  Use SH2,3 Explorer v0.8 to import new chhaa.mdl and replace the  original chhaa.mdl in chrpl.arc.
 18. Start a new game or load the first scene to see whether you get the mod working correctly.
 
-Important notes: Avoid replacing the head or the hair (Mesh_1_?). Head has blendshapes (morphs) which are stored in a section inside the mdl file. Changing the head will break the morph animation or even crash the game. 
+Important notes: 
+- Head or the hair (Mesh_1_?) replacements are not supported. Noesis mdl exporter will ignore any changes to the head . This is due to head has blendshapes (morphs) which are not being exported to glTF so they cannot be edit together with any new head mesh. Changing the head will break the morph animation or even crash the game.
  
 Default Heather (chhaa.mdl)
 
@@ -87,3 +88,11 @@ New outfit in game
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/in%20game.png)
 
 
+Special Options:
+
+Change the following flags in the loader source code to enable morph target loading. Set bMorph_calalog to 1 will shows Heather's all 25 morph shapes   
+
+- bLoadMorph     = 0                ----->  1 = load morph target
+- bMorph_catalog = 0              -----> 1 = display morphs as side-by-side meshes. 0 = morphs as frame
+
+![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/morph_gallery.png)
