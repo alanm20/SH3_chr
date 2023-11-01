@@ -376,8 +376,7 @@ class meshFile(object):
             if debug:
                 print("Mesh Info Start: " + str(bs.tell()))
                 print("Bonemap ",i,self.boneMap)
-            if i != 7:    
-                meshFile.buildMesh(self, [num_vertex, cur_pos + fidx_offset, numFidx, meshGroup, morph_ref_cnt, cur_pos + morph_ref_offs], i, self.boneMap, self.offsetBones, self.offsetFaceIdx, self.numBones)
+            meshFile.buildMesh(self, [num_vertex, cur_pos + fidx_offset, numFidx, meshGroup, morph_ref_cnt, cur_pos + morph_ref_offs], i, self.boneMap, self.offsetBones, self.offsetFaceIdx, self.numBones)
             if debug:
                 print("Mesh Info End: " + str(bs.tell()))
             cur_pos = cur_pos + mesh_size
