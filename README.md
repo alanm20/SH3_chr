@@ -59,6 +59,7 @@ Overviews:
 
 Important notes: 
 - Head or the hair (Mesh_1_?) replacements are not supported. Noesis mdl exporter will ignore any changes to the head . This is due to head has blendshapes (morphs) which are not being exported to glTF so they cannot be edit together with any new head mesh. Changing the head will break the morph animation or even crash the game.
+- You can force new mesh replace morph mesh by appending "_pass" to the mesh data block name (i.e. Mesh_0_6_pass). New mesh will replace morph meshes, all original morph targets are disabled as they are not compatible with new mesh.  
  
 Default Heather (chhaa.mdl)
 
