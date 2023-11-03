@@ -943,7 +943,7 @@ def meshWriteModel(mdl, bs):
     meshBufList = []   # new meshes are first hold in buffers for later assembly
     newMtrlList = []   # new material not in original character
     newMGrpList = []
-    print(submeshes)
+    #print(submeshes)
     # there are 2 meshgroups        
     for i in range(NumMeshGroups):
         if i==1 :
@@ -967,12 +967,17 @@ def meshWriteModel(mdl, bs):
             
             print (mesh.name)
             
-            if n_mph > 0:  # this mesh has morphs, we cannot replace it. not support yet
-                ms.writeBytes(f.readBytes(mesh_size-b_off))
-                numVerts = n_vert
+            if n_mph > 0 and mesh.name.find("_pass")== -1:  # this mesh has morphs, we cannot replace it unless mesh name contains "_pass"
+                ms.writeBytes(f.readBytes(mesh_size-b_off))  # keep original mesh and morphs 
+                numVerts = n_vert    
                 num_fidx = n_fidx2
                 fidx_start = f_off
             elif mesh.name is not "None":   # generate new mesh
+                header_cur_pos = ms.tell()
+                ms.seek(5*4, NOESEEK_ABS) #disable any morphs references, old morph will not work with new mesh
+                ms.writeUInt(0)
+                ms.seek(header_cur_pos,NOESEEK_ABS)
+                
                 numVerts = len(mesh.positions)
                 vertexBoneInfo=[]
                 boneSet = set()
@@ -1156,6 +1161,9 @@ def meshWriteModel(mdl, bs):
             else:  # put out a empty mesh which is invisible
                 # copy rest of header
                 header_cur_pos = ms.tell()
+                ms.seek(5*4, NOESEEK_ABS) # mesh is removed, disable any morphs references
+                ms.writeUInt(0)
+                ms.seek(header_cur_pos,NOESEEK_ABS)
                 ms.writeBytes(f.readBytes(header_size - (header_cur_pos-header_start)))
                 
                 print ("Creating placeholder mesh for Mesh_" + str(i) + "_" + str(m))
