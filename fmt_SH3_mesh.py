@@ -654,10 +654,10 @@ def meshLoadModel(data, mdlList):
     mdlList.append(mdl);
     #for mtrl in mdl.modelMats.matList:
     #    print (mtrl.name,mtrl.texName)
-    for tex in mdl.modelMats.texList:
-        print (tex.name,tex.pixelType)
-    tex = mdl.modelMats.texList[1]
-    raw_data = rapi.imageEncodeRaw(tex.pixelData,tex.width,tex.height, "b8g8r8a8")   
+    #for tex in mdl.modelMats.texList:
+    #    print (tex.name,tex.pixelType)
+    #tex = mdl.modelMats.texList[1]
+    #raw_data = rapi.imageEncodeRaw(tex.pixelData,tex.width,tex.height, "b8g8r8a8")   
     return 1
 
 # code from Ablam Reloaded Blender addon (HenryOfCarim and Sebastian Brachi) 
