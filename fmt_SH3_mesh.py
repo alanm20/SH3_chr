@@ -1,7 +1,7 @@
 #
 # Silent Hill 3 PC Model loader
 # alanm1
-#
+# v0.3 allow replacement of mesh with morphs by default (face,mouth and hair). New mesh is static with no morph animation
 # v0.2 add code to prevent modification to mesh with morph. no support for modifying morph target
 # v0.1 initial release
 
@@ -967,12 +967,13 @@ def meshWriteModel(mdl, bs):
             
             print (mesh.name)
             
-            if n_mph > 0 and mesh.name.find("_pass")== -1:  # this mesh has morphs, we cannot replace it unless mesh name contains "_pass"
-                ms.writeBytes(f.readBytes(mesh_size-b_off))  # keep original mesh and morphs 
-                numVerts = n_vert    
-                num_fidx = n_fidx2
-                fidx_start = f_off
-            elif mesh.name is not "None":   # generate new mesh
+            #if n_mph > 0 and mesh.name.find("_pass")== -1:  # this mesh has morphs, we cannot replace it unless mesh name contains "_pass"
+            #    ms.writeBytes(f.readBytes(mesh_size-b_off))  # keep original mesh and morphs 
+            #    numVerts = n_vert    
+            #    num_fidx = n_fidx2
+            #    fidx_start = f_off
+            #el
+            if mesh.name is not "None":   # generate new mesh
                 header_cur_pos = ms.tell()
                 ms.seek(5*4, NOESEEK_ABS) #disable any morphs references, old morph will not work with new mesh
                 ms.writeUInt(0)

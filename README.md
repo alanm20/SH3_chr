@@ -59,9 +59,9 @@ Overviews:
 
 Important notes: 
 - If a material's texture was modified, material name cannot starts with the default "Mat_". Change it to something like "xMat_". Noesis exporter retains the original texture with "Mat_" marterial.
-- Head or the hair (Mesh_1_?) replacements are not supported. Noesis mdl exporter will ignore any changes to the head . This is due to head has blendshapes (morphs) which are not being exported to glTF so they cannot be edit together with any new head mesh. Changing the head will break the morph animation or even crash the game.
-- You can force new mesh replace morph mesh by appending "_pass" to the mesh data block name (i.e. Mesh_0_6_pass). New mesh will replace morph meshes, all original morph targets are disabled as they are not compatible with new mesh. This could be useful for replacing Heather's head with Nurse head which does not need morph animations.
- 
+- Mead/mouth/hair/eyes have morph shapes. Morphs will be disabled when replaced by a new mesh
+~~~- Head or the hair (Mesh_1_?) replacements are not supported. Noesis mdl exporter will ignore any changes to the head . This is due to head has blendshapes (morphs) which are not being exported to glTF so they cannot be edit together with any new head mesh. Changing the head will break the morph animation or even crash the game.
+- You can force new mesh replace morph mesh by appending "_pass" to the mesh data block name (i.e. Mesh_0_6_pass). New mesh will replace morph meshes, all original morph targets are disabled as they are not compatible with new mesh. This could be useful for replacing Heather's head with Nurse head which does not need morph animations.~~~ 
 Default Heather (chhaa.mdl)
 
 ![alt text](https://github.com/alanm20/SH3_chr/blob/main/images/default%20heather.png)
